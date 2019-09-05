@@ -17,6 +17,7 @@
 package common
 
 import (
+	"bytes"
 	"database/sql/driver"
 	"encoding/hex"
 	"encoding/json"
@@ -259,6 +260,7 @@ func (a *Address) UnmarshalText(input []byte) error {
 
 // UnmarshalJSON parses a hash in hex syntax.
 func (a *Address) UnmarshalJSON(input []byte) error {
+	input = bytes.Replace(input, []byte("SPOCK-"), []byte("0x"), 1)
 	return hexutil.UnmarshalFixedJSON(addressT, input, a[:])
 }
 
